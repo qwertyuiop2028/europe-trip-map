@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
-<title>歐洲旅遊規劃互動地圖</title>
+<title>歐洲自駕規劃地圖</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -183,7 +183,7 @@ input[type=range]{flex:1;min-width:120px;accent-color:var(--route)}
   </div>
   <section id="panel">
     <div class="grip" id="grip" role="separator" aria-label="拖曳調整地圖與面板高度,點一下切換大小"></div>
-    <div class="head"><h1>歐洲旅遊規劃互動地圖<small>選地形、定據點、排每日輻射</small></h1><button class="ghost" id="reset">重設</button></div>
+    <div class="head"><h1>歐洲自駕規劃地圖<small>選地形、定據點、排每日自駕行程</small></h1><button class="ghost" id="reset">重設</button></div>
     <div class="steps" id="steps"></div>
     <div class="crumb" id="crumb"></div>
     <div id="body"></div>
@@ -411,6 +411,7 @@ var REGIONS=[
   spots:[['邁瑙島',47.705,9.195,'花島'],['梅爾斯堡',47.690,9.270,'湖畔城堡與葡萄園'],['賴謝瑙島',47.690,9.060,'世界遺產修道院島'],['萊茵瀑布',47.677,8.615,'歐洲最大瀑布之一'],['腓特烈港 齊柏林博物館',47.650,9.480,'飛船歷史'],['普凡德山',47.510,9.780,'纜車眺望三國'],['聖加侖',47.424,9.376,'修道院圖書館'],['阿彭策爾',47.331,9.409,'彩繪木屋小鎮'],['聖提斯山',47.249,9.343,'瑞士東北最高峰'],['烏爾丁根 樁屋',47.730,9.300,'史前水上屋'],['施泰因安萊茵',47.660,8.860,'壁畫屋小鎮']]}
 ];
 REGIONS.forEach(function(r){
+  if(r.t==='big')r.blurb+=' 這個區域平常多搭火車或地鐵,自駕車程只供參考。';
   r.B=r.bases.map(function(b){return {id:b[0],name:b[1],lat:b[2],lng:b[3],note:b[4]}});
   r.S=r.spots.map(function(s,i){return {i:i,name:s[0],lat:s[1],lng:s[2],note:s[3],tag:s[4]||''}});
   r.hasX=r.S.some(function(s){return s.tag==='x'});
