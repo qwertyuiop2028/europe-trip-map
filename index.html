@@ -179,7 +179,6 @@ input[type=range]{flex:1;min-width:120px;accent-color:var(--route)}
       <button id="ztrack" class="txt" hidden>足跡</button>
     </div>
     <div class="legend" id="legend"></div>
-    <div class="sw" id="sw" role="alertdialog"></div>
   </div>
   <section id="panel">
     <div class="grip" id="grip" role="separator" aria-label="拖曳調整地圖與面板高度,點一下切換大小"></div>
@@ -539,7 +538,8 @@ function draw(){
     if(sel&&state.step>=3)return;
     if(r&&state.step>=3)match=false;
     var rad=(sel?10:(match?9:5))*u;
-    o+='<g data-k="region" data-id="'+g.id+'" class="hit" opacity="'+(match?1:.3)+'">'
+    var locked=r&&state.step>=3;
+    o+='<g data-k="region" data-id="'+g.id+'" class="'+(locked?'':'hit')+'" style="'+(locked?'pointer-events:none':'')+'" opacity="'+(match?1:.3)+'">'
       +'<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+(rad*(hoverRegion===g.id?1.3:1)).toFixed(2)+'" style="fill:'+T[g.t].c+'" stroke-width="'+(2*u).toFixed(2)+'" class="pin"/>'
       +(HIST&&Object.keys(g.trips||{}).length?'<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+(rad+4*u).toFixed(2)+'" class="seenring" stroke-width="'+(2*u).toFixed(2)+'"/>':'')
       +(match&&(state.terrain||state.step>=2)?label(p[0]+rad+7*u,p[1]+4*u,g.name):'')+'</g>';
@@ -648,7 +648,7 @@ document.getElementById('zall').onclick=function(){fitEurope()};
 svg.addEventListener('click',function(e){
   if(moved)return;var t=e.target.closest('[data-k]');if(!t)return;
   var k=t.getAttribute('data-k'),id=t.getAttribute('data-id');
-  if(k==='region'){if(state.step>=3&&state.region&&id!==state.region)askSwitch(id);else pickRegion(id)}
+  if(k==='region'){if(state.step>=3&&state.region&&id!==state.region)return;pickRegion(id)}
   else if(k==='base'){if(state.step===4&&state.bases.indexOf(id)>=0){state.active=id;save();render();draw()}else if(state.step===3){toggleBase(id)}}
   else if(k==='spot'){focusSpot=+id;render();draw();var el=document.getElementById('sp'+id);if(el)el.scrollIntoView({block:'center',behavior:'smooth'})}
 });
@@ -729,7 +729,7 @@ function s5(){
     var date=dayLabel(d.n),head='<div class="top"><b><span class="mono">D'+d.n+'</span>'+(date?' · '+date:'')+'</b><span class="dist">住 '+d.base.name+'</span></div>';
     if(d.type==='arrive')return '<div class="spot">'+head+'<small>抵達 '+d.base.name+',熟悉周邊,不排遠程。</small></div>';
     if(d.type==='depart')return '<div class="spot">'+head+'<small>整理行李、離開。</small></div>';
-    if(d.type==='transfer')return '<div class="spot">'+head+'<small>換宿 → '+d.to.name+'</small><div class="acts"><span class="mono" style="font-size:12px">'+Math.round(p.xfer.km)+' km · '+fmtMin(p.xfer.min)+'</span><span class="links"><a href="'+routeLink(d.base,d.to)+'" target="_blank" rel="noopener">路線</a></span></div></div>';
+    if(d.type==='transfer')return '<div class="spot">'+head+'<small>換宿 → '+d.to.name+(p.xfer.min>240?'<span class="pill" style="color:var(--route)">長途移動</span>':'')+'</small><div class="acts"><span class="mono" style="font-size:12px">'+Math.round(p.xfer.km)+' km · '+fmtMin(p.xfer.min)+'</span><span class="links"><a href="'+routeLink(d.base,d.to)+'" target="_blank" rel="noopener">路線</a></span></div></div>';
     var long=d.min*2>state.maxMin*2*0.95;
     return '<div class="spot'+(d.src==='ok'?' ok':'')+'" data-spot="'+d.spot.i+'">'+head+'<b style="font-weight:500">'+d.spot.name+'<span class="pill" style="color:'+(d.src==='ok'?'var(--good)':'var(--muted)')+'">'+(d.src==='ok'?'想去':'系統補上')+'</span></b>'
       +(d.spot.note?'<small>'+d.spot.note+'</small>':'')
@@ -795,7 +795,8 @@ function s3(){
   var r=R();if(!r)return '<p class="sub">先在第 2 步選一個區域。</p>';
   var a=alloc(),pair='';
   if(state.bases.length===2){var A=r.B.filter(function(b){return b.id===state.bases[0]})[0],B=r.B.filter(function(b){return b.id===state.bases[1]})[0],l=leg(r,A,B);
-    pair='<div class="sum"><h3>換宿移動</h3><div class="line"><span>'+A.name+' → '+B.name+'</span><span class="mono">約 '+Math.round(l.km)+' km · '+fmtMin(l.min)+'</span></div></div>'}
+    pair='<div class="sum"><h3>換宿移動</h3><div class="line"><span>'+A.name+' → '+B.name+'</span><span class="mono">約 '+Math.round(l.km)+' km · '+fmtMin(l.min)+'</span></div>'
+      +'<div class="'+(l.min>240?'warn':'sub')+'" style="margin:4px 0 0;font-size:12.5px">'+(l.min>240?'兩個住宿點相距較遠,換宿日單程約 '+fmtMin(l.min)+',已自動算進行程和總車程。':'這段移動會自動算進換宿日和總車程。')+'</div></div>'}
   return '<h2>'+r.name+':住宿點</h2><p class="sub">建議 '+r.days+' 天。選 1 個住宿點就不換宿,選 2 個會換宿一次(目前每點住 '+a.join(' / ')+' 天)。也可以直接點地圖上的方塊。</p>'
    +'<div class="row"><label for="days">總天數</label><input id="days" type="range" min="7" max="21" value="'+state.days+'" data-act="days"><span class="val" id="daysv">'+state.days+' 天</span></div>'
    +'<div class="cards" style="margin-top:10px">'
@@ -894,11 +895,6 @@ body.addEventListener('mouseleave',function(){if(hoverSpot!==null||hoverRegion){
     var seen=state.tip4Seen;state=JSON.parse(JSON.stringify(DEF));state.tip4Seen=seen;save();render();body.scrollTop=0;fitEurope();draw()};
 })();
 
-/* 換區域前先確認,避免誤點地圖 */
-var sw=document.getElementById('sw');
-function askSwitch(id){var r=region(id);
-  sw.innerHTML='換到「'+r.name+'」?目前區域的想去景點會保留,住宿點要重新選。<br><button class="btn" data-go="'+id+'">換過去</button><button class="btn alt" data-go="">取消</button>';sw.classList.add('on')}
-sw.addEventListener('click',function(e){var b=e.target.closest('[data-go]');if(!b)return;var id=b.getAttribute('data-go');sw.classList.remove('on');if(id)pickRegion(id)});
 /* 手機:拖曳或點一下調整地圖與面板高度 */
 (function(){var g=document.getElementById('grip'),app=document.getElementById('app'),y0=null,h0=0,mv=false,presets=['42%','22%','68%'],pi=0;
   g.addEventListener('pointerdown',function(e){y0=e.clientY;h0=document.getElementById('mapwrap').getBoundingClientRect().height;mv=false;g.setPointerCapture(e.pointerId)});
