@@ -713,6 +713,33 @@ function planText(p){
   t+='總車程約 '+fmtMin(p.drive)+'(含換宿)';
   return t;
 }
+/* ---------- 雲端行程(Supabase,只在能連到外部資料庫的公開網站可用) ---------- */
+var CLOUD={fired:false,ready:false,loaded:false,loading:false,rows:[],msg:'',busy:false,name:''};
+window.addEventListener('cloud-ready',function(){CLOUD.fired=true;CLOUD.ready=!!window.cloud;render()});
+if(window.cloud){CLOUD.fired=true;CLOUD.ready=true}
+function cloudLoad(){
+  if(!CLOUD.ready||CLOUD.loading||CLOUD.loaded)return;CLOUD.loading=true;
+  window.cloud.list().then(function(rows){CLOUD.rows=rows||[];CLOUD.loaded=true;CLOUD.loading=false;render()})
+    .catch(function(e){CLOUD.loading=false;CLOUD.loaded=true;CLOUD.msg='讀取失敗:'+(e&&e.message||e);render()});
+}
+function cloudHtml(canSave){
+  var h='<h3 style="font-size:13px;margin:18px 0 4px">'+(canSave?'儲存到雲端':'大家存過的行程')+'</h3>';
+  if(!CLOUD.fired)return h+'<p class="note">連線中…</p>';
+  if(!CLOUD.ready)return h+'<p class="note">這個頁面無法連到雲端資料庫,請改用公開網站。</p>';
+  cloudLoad();
+  if(canSave){
+    var r=R(),def=r?r.name+' '+state.days+' 天':'';
+    h+='<div class="row"><label for="planname">行程名稱</label><input id="planname" type="text" maxlength="60" value="'+esc(CLOUD.name||def).replace(/"/g,'&quot;')+'" data-act="planname" style="flex:1;min-width:140px;border:1px solid var(--line);background:transparent;color:inherit;border-radius:8px;padding:4px 8px;font:inherit"><button class="btn" data-act="cloudsave"'+(CLOUD.busy?' disabled':'')+'>儲存</button></div>'
+      +'<p class="note" style="margin-top:6px">任何人都看得到存下的行程,請不要寫個人資料。</p>';
+  }
+  if(CLOUD.msg)h+='<p class="note" style="color:var(--ink)">'+esc(CLOUD.msg)+'</p>';
+  if(CLOUD.loading&&!CLOUD.rows.length)h+='<p class="note">讀取中…</p>';
+  else if(!CLOUD.rows.length&&CLOUD.loaded)h+='<p class="note">還沒有人存過行程。</p>';
+  h+=CLOUD.rows.map(function(x){
+    var d=new Date(x.created_at),ds=isNaN(d)?'':(d.getMonth()+1)+'/'+d.getDate()+' '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
+    return '<div class="spot"><div class="top"><b>'+esc(x.name)+'</b><span class="dist">'+esc(ds)+'</span></div><small>'+esc(x.region)+' · '+esc(String(x.days))+' 天'+(x.bases?' · '+esc(x.bases):'')+'</small>'+(x.spots?'<small>'+esc(x.spots.length>120?x.spots.slice(0,120)+'…':x.spots)+'</small>':'')+'</div>'}).join('');
+  return h;
+}
 function s5(){
   var r=R();if(!r||!state.bases.length)return '<p class="sub">先選好住宿點。</p>';
   var p=buildPlan(),spokes=p.days.filter(function(d){return d.type==='spoke'}).length;
@@ -736,6 +763,7 @@ function s5(){
       +'<div class="acts"><span class="mono" style="font-size:12px;color:'+(long?'var(--route)':'var(--muted)')+'">往返 '+Math.round(d.km*2)+' km · '+fmtMin(d.min*2)+'</span>'
       +'<span class="links"><a href="'+link('sv',d.spot)+'" target="_blank" rel="noopener">街景</a> <a href="'+link('earth',d.spot)+'" target="_blank" rel="noopener">Earth</a> <a href="'+routeLink(d.base,d.spot)+'" target="_blank" rel="noopener">路線</a></span></div></div>';
   }).join('');
+  h+=cloudHtml(true);
   h+='<h3 style="font-size:13px;margin:16px 0 4px">匯出</h3><div class="tabs" style="margin-top:0"><button data-act="copyplan" data-id="txt">文字 · 貼到訊息或筆記</button><button data-act="copyplan" data-id="md">Markdown · 貼到文件</button><button data-act="copyplan" data-id="csv">CSV · 貼到試算表</button></div>'
     +'<textarea id="plantext" readonly hidden style="width:100%;height:160px;margin:6px 0 10px;font-family:var(--f-mono);font-size:12px;background:transparent;color:inherit;border:1px solid var(--line);border-radius:8px;padding:8px"></textarea>'
     +'<p class="note">行程由你標為「想去」的景點排成,不足的天數用範圍內的景點補上。車程是估算值,出發前請用路線連結確認。CSV 可貼到試算表。</p>'
@@ -775,7 +803,7 @@ function s1(){
   return '<h2>想看什麼樣的地景?</h2><p class="sub">先選大地形,地圖上會亮出符合的區域。</p><div class="cards">'
    +TORDER.map(function(k){var n=REGIONS.filter(function(r){return r.t===k}).length;
      return '<button class="card'+(state.terrain===k?' sel':'')+'" data-act="terrain" data-id="'+k+'"><span class="dot" style="background:'+T[k].c+'"></span><span><b>'+T[k].zh+'</b><small>'+T[k].ex+' · '+n+' 個區域</small></span></button>'}).join('')
-   +'</div>'+tripsHtml()+'<div class="nav"><span></span><button class="btn" data-act="step" data-n="2">看區域</button></div>';
+   +'</div>'+tripsHtml()+(CLOUD.fired&&CLOUD.ready?cloudHtml(false):'')+'<div class="nav"><span></span><button class="btn" data-act="step" data-n="2">看區域</button></div>';
 }
 function tripsHtml(){
   if(!HIST)return '';
@@ -856,6 +884,14 @@ body.addEventListener('click',function(e){
   else if(a==='base'){toggleBase(id)}
   else if(a==='copyplan'){copyOut(id,t)}
   else if(a==='sheet'){openSheet()}
+  else if(a==='cloudsave'){
+    var inp=document.getElementById('planname'),cr=R(),cp=buildPlan();
+    var row={name:((inp&&inp.value)||'').trim().slice(0,60)||(cr.name+' '+state.days+' 天'),region:cr.name.slice(0,60),days:state.days,
+      bases:cp.bs.map(function(b){return b.name}).join(' → ').slice(0,200),
+      spots:cp.days.filter(function(d){return d.spot}).map(function(d){return d.spot.name}).join('、').slice(0,1000)};
+    CLOUD.busy=true;CLOUD.msg='儲存中…';render();
+    window.cloud.add(row).then(function(){CLOUD.msg='已儲存。';CLOUD.loaded=false;CLOUD.busy=false;render()})
+      .catch(function(e){CLOUD.busy=false;CLOUD.msg='儲存失敗:'+(e&&e.message||e);render()})}
   else if(a==='tip4done'||a==='tip4'){e.preventDefault();state.tip4Seen=(a==='tip4done');save();render()}
   else if(a==='markall'||a==='clearmarks'){var rr=R(),ab=rr.B.filter(function(b){return b.id===state.active})[0]||rr.B[0];
     rr.S.forEach(function(s){var key=mk(rr.id,ab.id,s.i);
@@ -877,7 +913,8 @@ body.addEventListener('click',function(e){
   else if(a==='step'){go(+t.getAttribute('data-n'))}
 });
 body.addEventListener('input',function(e){
-  var t=e.target;if(t.id==='startdate'){state.startDate=t.value;save();render();return}
+  var t=e.target;if(t.id==='planname'){CLOUD.name=t.value;return}
+  if(t.id==='startdate'){state.startDate=t.value;save();render();return}
   if(t.id==='days'){state.days=+t.value;document.getElementById('daysv').textContent=state.days+' 天';save()}
   if(t.id==='maxmin'){state.maxMin=+t.value;document.getElementById('maxv').textContent=state.maxMin+' 分';save();draw()}
 });
@@ -960,5 +997,23 @@ else{view=pts2view([[-10,36],[30,60]],1.1)}
 draw();
 </script>
 
+<script type="module">
+/* Supabase:只用網址與 Publishable key(可公開)。權限由資料庫的 RLS 控管:任何人可讀取、可新增,不能修改與刪除。 */
+try{
+  const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
+  const sb = createClient('https://xonnlopalrcjankkptph.supabase.co', 'sb_publishable_ixd_5A4tcH9dpCwPAta1tg_OdAif22G');
+  window.cloud = {
+    async list(){
+      const { data, error } = await sb.from('saved_plans').select('id,created_at,name,region,days,bases,spots').order('created_at',{ascending:false}).limit(30);
+      if(error) throw error; return data;
+    },
+    async add(row){
+      const { error } = await sb.from('saved_plans').insert(row);
+      if(error) throw error;
+    }
+  };
+}catch(e){ window.cloudError = e; }
+window.dispatchEvent(new Event('cloud-ready'));
+</script>
 </body>
 </html>
