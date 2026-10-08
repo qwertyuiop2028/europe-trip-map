@@ -98,6 +98,9 @@ input[type=range]{flex:1;min-width:120px;accent-color:var(--route)}
 .acts{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:2px}
 .links a{font-size:12px;text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:1px 8px;background:var(--chip)}
 .links a:hover{border-color:var(--ink)}
+.tagrow{display:flex;flex-wrap:wrap;gap:4px;margin:3px 0}
+.tg{font-size:11px;border:1px solid var(--line);border-radius:99px;padding:0 8px;color:var(--muted)}
+.tg.on{border-color:var(--ink);color:var(--ink);background:var(--chip)}
 .want{margin-left:auto;border:1px solid var(--ink);background:transparent;border-radius:8px;padding:3px 16px;font-size:13px;font-weight:500}
 .want:hover{background:var(--chip)}
 .want.on{background:var(--good);border-color:var(--good);color:#fff}
@@ -408,9 +411,116 @@ var REGIONS=[
   spots:[['蒂豪尼半島',46.911,17.890,'修道院與薰衣草'],['赫維茲湖溫泉',46.790,17.190,'歐洲最大天然溫泉湖'],['巴達喬尼',46.800,17.490,'火山丘葡萄園'],['舒梅格城堡',46.980,17.280,'山頂城堡'],['希格利蓋特',46.800,17.430,'城堡廢墟與湖景'],['韋斯普雷姆',47.090,17.910,'皇后之城'],['赫倫德瓷廠',47.140,17.760,'彩繪瓷器'],['費斯特蒂奇宮',46.768,17.250,'巴洛克宮殿']]},
  {id:'constance',name:'博登湖',t:'lake',speed:65,days:'5–8',blurb:'德國、奧地利、瑞士三國共享的湖,渡輪與環湖自行車道發達。',
   bases:[['konstanz','康斯坦茨',47.660,9.175,'德瑞邊境,往瑞士與萊茵瀑布順'],['lindau','林道',47.546,9.684,'湖上古城小島'],['bregenz','布雷根茨',47.505,9.747,'奧地利側,近山區與音樂節']],
-  spots:[['邁瑙島',47.705,9.195,'花島'],['梅爾斯堡',47.690,9.270,'湖畔城堡與葡萄園'],['賴謝瑙島',47.690,9.060,'世界遺產修道院島'],['萊茵瀑布',47.677,8.615,'歐洲最大瀑布之一'],['腓特烈港 齊柏林博物館',47.650,9.480,'飛船歷史'],['普凡德山',47.510,9.780,'纜車眺望三國'],['聖加侖',47.424,9.376,'修道院圖書館'],['阿彭策爾',47.331,9.409,'彩繪木屋小鎮'],['聖提斯山',47.249,9.343,'瑞士東北最高峰'],['烏爾丁根 樁屋',47.730,9.300,'史前水上屋'],['施泰因安萊茵',47.660,8.860,'壁畫屋小鎮']]}
+  spots:[['邁瑙島',47.705,9.195,'花島'],['梅爾斯堡',47.690,9.270,'湖畔城堡與葡萄園'],['賴謝瑙島',47.690,9.060,'世界遺產修道院島'],['萊茵瀑布',47.677,8.615,'歐洲最大瀑布之一'],['腓特烈港 齊柏林博物館',47.650,9.480,'飛船歷史'],['普凡德山',47.510,9.780,'纜車眺望三國'],['聖加侖',47.424,9.376,'修道院圖書館'],['阿彭策爾',47.331,9.409,'彩繪木屋小鎮'],['聖提斯山',47.249,9.343,'瑞士東北最高峰'],['烏爾丁根 樁屋',47.730,9.300,'史前水上屋'],['施泰因安萊茵',47.660,8.860,'壁畫屋小鎮']]},
+ {id:'engadin',name:'恩加丁與伯連那線',t:'mountain',speed:50,days:'5–8',blurb:'瑞士東南部的高山湖與世界遺產鐵道,山口多、景點沿鐵路分布。',
+  bases:[['stmoritz','聖莫里茨',46.497,9.838,'高山湖畔度假城,中段據點'],['pontresina','蓬特雷西納',46.492,9.904,'莫特拉奇冰河近,較安靜'],['davos','達沃斯',46.800,9.836,'北側據點,往庫爾與蘭德瓦瑟高架橋'],['poschiavo','波斯基亞沃',46.324,10.059,'南側義大利語小鎮']],
+  spots:[['莫特拉奇冰河',46.410,9.930,'平緩步道可達冰河前緣'],['阿爾普格呂姆',46.340,10.020,'伯連那線山頂車站'],['蘭德瓦瑟高架橋',46.690,9.680,'鐵道經典地標'],['蒂拉諾',46.215,10.170,'伯連那線終點,義大利境內'],['利維尼奧',46.540,10.140,'免稅高山小鎮'],['瑞士國家公園 采爾內茨',46.700,10.090,'瑞士唯一國家公園'],['穆奧塔斯穆拉格',46.510,9.910,'纜車上看恩加丁湖群'],['庫爾',46.850,9.530,'瑞士最古老城市之一'],['阿羅薩',46.780,9.680,'湖與山的度假地'],['比安科湖',46.410,10.020,'分水嶺高山湖'],['錫爾斯湖',46.430,9.770,'尼采故居所在湖畔'],['聖莫里茨湖',46.497,9.838,'湖岸步道']]},
+ {id:'valais',name:'瓦萊與馬特洪峰',t:'mountain',speed:45,days:'6–9',blurb:'瑞士南部的高峰與冰河,山谷深、車程長,許多據點要換登山火車。',
+  bases:[['zermatt','策馬特',46.021,7.749,'無車小鎮,馬特洪峰腳下'],['sion','錫永',46.230,7.360,'河谷城市據點'],['saasfee','薩斯費',46.110,7.930,'冰河環繞的山村'],['verbier','韋比耶',46.097,7.228,'西側山區度假地']],
+  spots:[['戈爾內格拉特',45.983,7.784,'登山火車看馬特洪峰'],['馬特洪峰冰河天堂',45.940,7.730,'歐洲最高纜車站之一'],['阿雷奇冰河 貝特梅爾阿爾卑',46.390,8.060,'歐洲最長冰河'],['洛伊克巴德溫泉',46.380,7.630,'山中溫泉村'],['大迪克桑斯水壩',46.080,7.400,'歐洲最高重力壩'],['錫永城堡',46.234,7.366,'山丘上的雙城堡'],['馬蒂尼',46.100,7.070,'吉亞納達基金會'],['特里安峽谷',46.070,6.990,'懸空步道'],['阿羅拉 藍湖',46.020,7.500,'健行高山湖'],['格里門茨',46.180,7.580,'傳統木屋村'],['蒙塔納-克朗',46.310,7.480,'高爾夫與滑雪'],['辛普朗山口',46.250,8.030,'阿爾卑斯古道']]},
+ {id:'transylvania',name:'羅馬尼亞特蘭西瓦尼亞',t:'small',speed:50,days:'6–9',blurb:'薩克森人的設防教堂、哥德式古城與喀爾巴阡山,路況與距離不如西歐穩定。',
+  bases:[['brasov','布拉索夫',45.650,25.610,'中心據點,古堡與山區近'],['sibiu','錫比烏',45.800,24.150,'西側據點,中世紀古城'],['sighisoara','錫吉什瓦拉',46.220,24.790,'完整中世紀山城'],['sinaia','錫納亞',45.350,25.550,'山間度假與佩萊什']],
+  spots:[['布朗城堡',45.515,25.367,'德古拉傳說城堡'],['佩萊什城堡',45.360,25.540,'新文藝復興宮殿'],['拉什諾夫要塞',45.590,25.460,'山頂農民堡壘'],['維斯克里',46.050,25.090,'設防教堂村'],['比耶爾坦',46.130,24.520,'世界遺產設防教堂'],['跨法加拉山公路 巴萊亞湖',45.600,24.620,'羅馬尼亞最高公路'],['阿爾巴尤利亞',46.070,23.570,'星形要塞'],['克盧日-納波卡',46.770,23.590,'年輕人的大學城'],['普雷日梅',45.720,25.780,'設防教堂'],['魯佩亞',46.030,25.220,'山丘上的廢棄堡壘']]},
+ {id:'montenegro',name:'黑山與科托爾灣',t:'sea',speed:45,days:'4–7',blurb:'亞得里亞海最深的峽灣,山壁陡、盤山路多,景點集中在灣區周圍。',
+  bases:[['kotor','科托爾',42.425,18.770,'灣區古城據點'],['budva','布德瓦',42.290,18.840,'海灘度假據點'],['zabljak','扎布利亞克',43.155,19.120,'北部山區據點']],
+  spots:[['佩拉斯特',42.485,18.700,'灣上的小島教堂'],['聖斯特凡島',42.255,18.890,'島上度假村,遠看最美'],['洛夫琴山陵墓',42.400,18.830,'蛇形山路上山'],['奧斯特羅格修道院',42.675,19.030,'嵌在懸崖的修道院'],['杜米托爾國家公園',43.155,19.120,'冰河湖與山峰'],['斯卡達爾湖',42.200,19.200,'巴爾幹最大湖'],['科托爾要塞步道',42.428,18.772,'爬 1350 階看全灣'],['蒂瓦特',42.430,18.700,'灣區機場所在'],['烏爾齊尼',41.920,19.210,'南端海灘']]},
+ {id:'ireland',name:'愛爾蘭西海岸',t:'sea',speed:50,days:'7–10',blurb:'大西洋沿岸的斷崖、半島與古老修道院,單線窄路多,天氣變化快。',
+  bases:[['dublin','都柏林',53.350,-6.260,'東側入口'],['galway','戈爾韋',53.270,-9.050,'中西部據點,莫赫與康尼馬拉近'],['killarney','基拉尼',52.060,-9.500,'西南據點,凱瑞環線'],['dingle','丁格爾',52.140,-10.270,'半島尖端小鎮']],
+  spots:[['莫赫懸崖',52.970,-9.430,'大西洋斷崖'],['凱瑞環線 肯梅爾',51.880,-9.580,'半島環形公路'],['丁格爾半島 斯萊角',52.110,-10.450,'海岸風景公路'],['卡舍爾岩',52.520,-7.890,'山丘上的古修道院'],['格倫達洛',53.010,-6.330,'修道院遺跡與湖'],['基爾肯尼',52.650,-7.250,'中世紀城堡城'],['康尼馬拉 凱爾莫爾修道院',53.560,-9.880,'湖畔哥德式城堡'],['阿蘭群島 伊尼什莫爾',53.120,-9.720,'要搭船,石牆島嶼'],['布拉尼城堡',51.930,-8.570,'親吻石'],['巨人堤道',55.240,-6.510,'北愛爾蘭,離都柏林較遠']]},
+ {id:'lakedistrict',name:'英格蘭湖區',t:'lake',speed:45,days:'4–7',blurb:'英國最大國家公園,山、湖與石牆,單線窄路與彎道多,時間比距離長。',
+  bases:[['windermere','溫德米爾',54.380,-2.910,'最大湖畔小鎮'],['keswick','凱斯威克',54.600,-3.130,'北側據點,德文特湖近'],['ambleside','安布爾賽德',54.430,-2.960,'步道起點小鎮']],
+  spots:[['格拉斯米爾',54.460,-3.020,'華茲華斯故居'],['希爾托普',54.350,-2.970,'彼得兔作者故居'],['德文特湖',54.580,-3.140,'環湖步道'],['赫爾維林山',54.527,-3.016,'英國經典稜線健行'],['哈德諾特羅馬堡壘',54.400,-3.200,'山口上的遺跡'],['塔恩豪斯',54.380,-2.990,'平緩步道與湖'],['霍尼斯特山口',54.510,-3.210,'板岩礦與陡峭山路'],['卡斯特里格石圈',54.600,-3.100,'史前石圈'],['烏爾斯沃特',54.570,-2.880,'蒸汽船湖'],['芒卡斯特城堡',54.350,-3.400,'西岸城堡與花園'],['霍克斯黑德',54.375,-2.998,'白色小鎮'],['肯德爾',54.330,-2.750,'南側城鎮與薄荷糖']]},
+ {id:'cotswolds',name:'英格蘭科茨沃爾德',t:'small',speed:55,days:'4–7',blurb:'蜂蜜色石屋的小鎮與緩丘,窄路與停車位是主要的挑戰。',
+  bases:[['bourton','河畔伯頓',51.885,-1.755,'小威尼斯,中心據點'],['campden','奇平卡姆登',52.050,-1.780,'北側據點,集市小鎮'],['burford','伯福德',51.810,-1.640,'東側據點,牛津近']],
+  spots:[['百里',51.760,-1.840,'魚塘與石屋'],['史托昂達沃爾德',51.930,-1.720,'廣場與古董店'],['布羅德韋',52.030,-1.850,'山頂塔樓'],['城堡庫姆',51.490,-2.230,'最美村莊代表'],['拉科克',51.410,-2.120,'影集常用的取景村'],['巴斯',51.381,-2.360,'羅馬浴場'],['賽倫塞斯特',51.720,-1.970,'羅馬遺跡集市'],['佩恩斯威克',51.790,-2.190,'玫瑰花園與山丘'],['斯諾希爾',52.020,-1.860,'莊園與薰衣草'],['上斯勞特',51.900,-1.730,'安靜的小河村'],['蘇德利城堡',51.950,-1.960,'亨利八世王后居所']]},
+ {id:'dordogne',name:'法國多爾多涅',t:'small',speed:55,days:'5–8',blurb:'河谷懸崖上的城堡、史前洞穴與美食,景點沿多爾多涅河分布。',
+  bases:[['sarlat','薩拉',44.890,1.216,'中世紀古城,中心據點'],['brive','布里夫',45.160,1.530,'北側據點'],['cahors','卡奧爾',44.450,1.440,'南側酒鄉']],
+  spots:[['貝納克城堡',44.840,1.145,'懸崖上的堡壘'],['拉羅克加熱克',44.820,1.180,'岩壁下的村莊'],['多姆',44.800,1.220,'山丘山城'],['卡斯泰爾諾',44.820,1.150,'河對岸的對峙城堡'],['拉斯科四號',45.060,1.170,'史前洞穴複製館'],['羅卡馬杜爾',44.800,1.620,'懸崖上的朝聖地'],['帕迪拉克深淵',44.860,1.750,'地下河船遊'],['科隆日拉魯日',45.060,1.660,'紅色砂岩村莊'],['聖西爾拉波皮',44.465,1.670,'岩壁上的村'],['萊澤濟',44.940,1.030,'史前遺址之都'],['布朗托姆',45.360,0.650,'河環繞的小鎮'],['奧特福爾城堡',45.260,1.150,'不對稱城堡']]},
+ {id:'umbria',name:'義大利翁布里亞',t:'small',speed:55,days:'5–8',blurb:'義大利的綠色心臟,中世紀山城與朝聖地,多是山丘小路。',
+  bases:[['assisi','阿西西',43.070,12.620,'朝聖古城'],['perugia','佩魯賈',43.110,12.390,'大學城,北側據點'],['spoleto','斯波萊托',42.740,12.740,'南側據點,大教堂古城'],['todi','托迪',42.780,12.410,'安靜的山丘小鎮']],
+  spots:[['斯佩洛',43.030,12.670,'花節的小鎮'],['古比奧',43.350,12.580,'中世紀石頭城'],['奧爾維耶托',42.718,12.111,'凝灰岩上的大教堂'],['蒙泰法爾科',42.890,12.650,'紅酒小鎮'],['諾爾恰',42.790,13.090,'黑松露與山間城牆'],['卡斯特盧喬',42.820,13.210,'彩色花毯平原'],['馬爾莫雷瀑布',42.550,12.720,'人工瀑布'],['特雷維',42.880,12.740,'橄欖油小鎮'],['貝瓦尼亞',42.930,12.610,'羅馬遺跡小鎮'],['特拉西梅諾湖',43.120,12.050,'義大利中部最大湖'],['卡夏',42.720,13.010,'朝聖小鎮']]},
+ {id:'porto',name:'波爾圖與杜羅河谷',t:'plain',speed:65,days:'5–8',blurb:'葡萄牙北部的梯田葡萄園與港口古城,河谷公路彎多但景色連續。',
+  bases:[['porto','波爾圖',41.150,-8.610,'港口古城,北側據點'],['pinhao','皮尼昂',41.190,-7.540,'杜羅河谷葡萄園中心'],['guimaraes','吉馬良斯',41.440,-8.290,'葡萄牙的誕生地']],
+  spots:[['杜羅河谷葡萄莊園',41.170,-7.800,'梯田與品酒'],['布拉加 仁慈耶穌山',41.555,-8.380,'階梯朝聖地'],['阿馬蘭特',41.270,-8.080,'河上石橋小鎮'],['阿威羅',40.640,-8.650,'彩色船與運河'],['科英布拉',40.210,-8.430,'古老大學'],['加亞新城',41.130,-8.610,'波特酒窖'],['拉梅古',41.100,-7.810,'大教堂與酒莊'],['雷加',41.165,-7.790,'河谷鐵路樞紐'],['維亞納堡',41.690,-8.830,'海邊小鎮'],['利馬橋',41.770,-8.580,'葡萄牙最古老小鎮之一'],['傑雷斯國家公園',41.750,-8.150,'山地健行'],['科阿谷岩畫',41.080,-7.120,'世界遺產史前岩刻']]},
+ {id:'peloponnese',name:'希臘伯羅奔尼薩斯',t:'small',speed:55,days:'6–9',blurb:'古希臘遺址集中的半島,可租車環線,山路與海岸交替。',
+  bases:[['nafplio','納夫普利翁',37.567,22.800,'東北據點,古希臘遺址近'],['olympia','奧林匹亞',37.640,21.630,'西側據點,奧運發源地'],['monemvasia','莫奈姆瓦夏',36.686,23.040,'中世紀岩上城'],['kalamata','卡拉馬塔',37.040,22.110,'南側據點與橄欖產區']],
+  spots:[['埃皮達魯斯劇場',37.596,23.079,'聲學奇蹟'],['邁錫尼',37.730,22.756,'獅子門'],['科林斯運河',37.930,22.980,'人工海峽'],['米斯特拉斯',37.070,22.370,'拜占庭遺址山城'],['奧林匹亞遺址',37.640,21.630,'奧運起源'],['迪羅斯洞穴',36.640,22.380,'地下湖船遊'],['馬尼 瓦提亞',36.480,22.370,'石塔村'],['巴塞阿波羅神殿',37.430,21.900,'山中神殿'],['古科林斯',37.907,22.880,'羅馬時期城市'],['莫奈姆瓦夏',36.686,23.040,'岩上城堡'],['梅索尼',36.820,21.700,'海邊威尼斯堡壘'],['埃拉豐尼索斯海灘',36.470,22.970,'粉紅沙灘']]},
+ {id:'rhine',name:'萊茵河谷與摩澤爾',t:'small',speed:60,days:'5–8',blurb:'河谷兩側城堡密集,景點沿河與支流分布,渡輪與火車也可替代開車。',
+  bases:[['koblenz','科布倫茨',50.360,7.590,'萊茵與摩澤爾交會處'],['rudesheim','呂德斯海姆',49.980,7.930,'南段酒鄉小鎮'],['cologne','科隆',50.940,6.960,'北側大城據點'],['cochem','科赫姆',50.145,7.170,'摩澤爾河畔城堡鎮']],
+  spots:[['羅蕾萊岩',50.150,7.730,'傳說河灣'],['馬克斯堡',50.270,7.630,'唯一未被毀的河谷城堡'],['埃爾茨城堡',50.205,7.337,'童話般的山谷城堡'],['科赫姆帝國城堡',50.145,7.170,'河畔山丘上'],['巴哈拉赫',50.060,7.770,'木桁架老城'],['海德堡',49.410,8.690,'古堡與老橋'],['美因茨',50.000,8.270,'古騰堡故鄉'],['特里爾',49.750,6.640,'羅馬黑城門'],['貝恩卡斯特爾',49.920,7.070,'摩澤爾木屋廣場'],['科隆大教堂',50.941,6.958,'世界遺產'],['波恩',50.730,7.100,'貝多芬故鄉'],['普法爾茨城堡',50.090,7.770,'河中小島收費站']]}
 ];
+/* 補充住宿點:[id, 名稱, 緯度, 經度, 說明] */
+var EXTRA_BASES={
+ alps:[['zellsee','采爾湖',47.325,12.797,'東側據點,大鐘山與高陶恩山近'],['garmisch','加米施',47.492,11.095,'德國最高峰楚格峰腳下']],
+ dolomites:[['bolzano','波札諾',46.498,11.354,'西側城市據點,往塞切達順'],['selva','塞爾瓦',46.556,11.757,'中段山谷,多座山口交會']],
+ riviera:[['menton','芒通',43.775,7.500,'義法邊界小鎮,安靜'],['avignon','亞維儂',43.949,4.805,'西側據點,往普羅旺斯村莊']],
+ amalfi:[['positano','波西塔諾',40.628,14.485,'海岸中心,街道陡峭'],['salerno','薩萊諾',40.680,14.768,'東側據點,帕埃斯圖姆近']],
+ normandy:[['caen','卡昂',49.182,-0.370,'內陸城市據點'],['rouen','魯昂',49.443,1.099,'東側據點,往吉維尼順']],
+ kent:[['canterbury','坎特伯里',51.280,1.080,'大教堂城'],['rye','萊伊',50.950,0.730,'鵝卵石小鎮據點']],
+ lowlands:[['ghent','根特',51.054,3.725,'比利時側中世紀城'],['rotterdam','鹿特丹',51.920,4.480,'港口與現代建築']],
+ loire:[['saumur','索米爾',47.260,-0.077,'西段酒鄉小城']],
+ alsace:[['obernai','奧貝爾奈',48.462,7.481,'完整的中世紀小鎮'],['riquewihr','里克威爾',48.167,7.298,'童話小鎮,住宿安靜']],
+ bohemia:[['brno','布爾諾',49.195,16.608,'布拉格與維也納之間'],['krumlov','庫倫洛夫',48.812,14.315,'南波西米亞河灣小城']],
+ berchtesgaden:[['badreichenhall','巴特賴興哈爾',47.723,12.878,'溫泉鎮,近國王湖'],['hallein','哈萊因',47.683,13.098,'鹽礦鎮']],
+ thun:[['gstaad','施塔德',46.475,7.286,'西側高級山村'],['brienz','布里恩茨',46.754,8.037,'木雕小鎮']],
+ lucerne:[['weggis','韋吉斯',47.032,8.430,'湖畔度假小鎮'],['altdorf','阿特多夫',46.880,8.644,'南側山谷據點']],
+ como:[['bellagio','貝拉焦',45.986,9.262,'湖心半島小鎮'],['lugano','盧加諾',46.003,8.951,'瑞士提契諾湖城']],
+ cinque:[['monterosso','蒙特羅索',44.146,9.654,'五漁村北端有大沙灘'],['portovenere','波爾托韋內雷',44.054,9.834,'彩色港口']],
+ romantic:[['wurzburg','維爾茨堡',49.794,9.934,'北段入口與主教宮'],['fussen','富森',47.571,10.702,'南段終點,新天鵝堡近']],
+ msm:[['dinan','迪南',48.455,-2.050,'中世紀木桁架老城'],['cancale','坎卡勒',48.676,-1.853,'生蠔小港']],
+ paris:[['versailles','凡爾賽',48.805,2.120,'西郊據點'],['fontainebleau','楓丹白露',48.402,2.700,'南郊森林與宮殿']],
+ london:[['cambridge','劍橋',52.205,0.119,'北側大學城'],['bath','巴斯',51.381,-2.360,'西側羅馬溫泉城']],
+ rome:[['viterbo','維泰博',42.417,12.105,'北側據點'],['frascati','弗拉斯卡蒂',41.810,12.680,'羅馬近郊酒鎮']],
+ tuscany:[['lucca','盧卡',43.844,10.505,'城牆小城'],['montepulciano','蒙特普齊亞諾',43.100,11.780,'南側酒鄉']],
+ barcelona:[['sitges','錫切斯',41.237,1.806,'海灘小鎮'],['tarragona','塔拉戈納',41.119,1.245,'南側古羅馬城']],
+ berlin:[['potsdam','波茨坦',52.404,13.038,'西郊宮殿城'],['leipzig','萊比錫',51.340,12.375,'南側音樂之城']],
+ budapest:[['eger','埃格爾',47.900,20.370,'北部葡萄酒小城'],['szentendre','聖安德烈',47.670,19.075,'北郊藝術小鎮']],
+ madrid:[['toledo','托雷多',39.860,-4.020,'古城據點'],['segovia','塞哥維亞',40.950,-4.120,'羅馬水道橋小城']],
+ lisbon:[['sintra','辛特拉',38.797,-9.390,'山上宮殿小鎮'],['setubal','塞圖巴爾',38.524,-8.893,'南岸海灣']],
+ garda:[['malcesine','馬爾切西內',45.766,10.809,'東岸山下小鎮'],['salo','薩洛',45.607,10.521,'西岸古城']],
+ bled:[['kranjska','克蘭斯卡戈拉',46.485,13.785,'西北山區據點'],['bovec','博維茨',46.337,13.553,'索查河戶外據點']],
+ annecy:[['geneva','日內瓦',46.204,6.143,'瑞士側大城'],['aixlesbains','艾克斯萊班',45.690,5.910,'布爾傑湖溫泉']],
+ croatia:[['makarska','馬卡爾斯卡',43.296,17.018,'海灘度假'],['korcula','科爾丘拉',42.960,17.135,'島上古城']],
+ sicily:[['taormina','陶爾米納',37.850,15.290,'東海岸山城'],['trapani','特拉帕尼',38.017,12.514,'西岸鹽田與埃里切'],['agrigento','阿格里真托',37.311,13.577,'南岸神殿谷']],
+ sardinia:[['portocervo','波爾托切沃',41.137,9.530,'翡翠海岸'],['oristano','奧里斯塔諾',39.900,8.590,'西岸中段']],
+ cyclades:[['paros','帕羅斯',37.085,25.150,'交通樞紐島']],
+ mallorca:[['pollenca','波連薩',39.877,3.016,'北岸古鎮']],
+ malta:[['gozo','戈佐 維多利亞',36.044,14.240,'離島據點']],
+ corsica:[['portovecchio','波爾托韋基奧',41.590,9.280,'東南度假'],['bastia','巴斯蒂亞',42.700,9.450,'東北港口']],
+ fjords:[['voss','沃斯',60.628,6.415,'卑爾根與弗洛姆之間'],['odda','奧達',60.070,6.545,'舌頭岩登山據點']],
+ scotland:[['stirling','斯特靈',56.117,-3.937,'中部城堡城'],['oban','奧本',56.415,-5.470,'西海岸港口'],['aviemore','艾維莫爾',57.195,-3.830,'凱恩戈姆山']],
+ copenhagen:[['helsingor','赫爾辛格',56.036,12.613,'克倫堡城堡所在'],['malmo','馬爾默',55.605,13.000,'瑞典側據點']],
+ stockholm:[['uppsala','烏普薩拉',59.858,17.640,'北側大學城']],
+ munich:[['regensburg','雷根斯堡',49.013,12.100,'東北古城'],['tegernsee','泰根湖',47.710,11.760,'湖與山']],
+ istanbul:[['bursa','布爾薩',40.190,29.060,'南側據點']],
+ pyrenees:[['pau','波城',43.295,-0.370,'法側門戶'],['andorra','安道爾',42.507,1.520,'山中小國據點']],
+ tatras:[['levoca','萊沃查',49.026,20.590,'斯皮什地區古城']],
+ puglia:[['polignano','波利尼亞諾阿馬雷',40.996,17.220,'海崖小鎮'],['matera','馬泰拉',40.667,16.604,'石窟城']],
+ andalucia:[['ronda','龍達',36.740,-5.167,'峽谷山城'],['cordoba','科爾多瓦',37.880,-4.780,'北側據點']],
+ burgundy:[['autun','歐坦',46.950,4.300,'西側古城'],['macon','馬孔',46.307,4.830,'南側酒鄉']],
+ veneto:[['vicenza','維琴察',45.545,11.535,'帕拉迪奧建築城'],['treviso','特雷維索',45.667,12.243,'小運河老城']],
+ baltic:[['kaunas','考納斯',54.898,23.904,'立陶宛第二大城'],['parnu','派爾努',58.385,24.500,'愛沙尼亞海濱']],
+ algarve:[['sagres','薩格雷斯',37.008,-8.940,'西南角岬角'],['albufeira','阿爾布費拉',37.089,-8.250,'中段海灘']],
+ cornwall:[['penzance','彭贊斯',50.120,-5.540,'西端港口'],['tintagel','廷塔哲爾',50.667,-4.750,'北岸傳說城堡']],
+ balaton:[['veszprem','韋斯普雷姆',47.090,17.910,'北側古城'],['heviz','赫維茲',46.790,17.190,'溫泉湖']],
+ constance:[['meersburg','梅爾斯堡',47.690,9.270,'城堡與湖畔'],['stgallen','聖加侖',47.424,9.376,'瑞士側']]
+};
+/* 細項標籤:同一種地形底下再分類,用來篩選區域 */
+var TAGS={
+ alps:['高山健行','冰河纜車','山間湖泊','世界遺產'],dolomites:['高山健行','滑雪度假','峽谷瀑布'],pyrenees:['高山健行','峽谷瀑布','山丘小鎮'],tatras:['高山健行','世界遺產'],
+ berchtesgaden:['山間湖泊','高山健行'],thun:['山間湖泊','冰河纜車','峽谷瀑布'],lucerne:['山間湖泊','冰河纜車'],engadin:['高山健行','冰河纜車','世界遺產'],valais:['高山健行','冰河纜車','滑雪度假'],
+ riviera:['海灘度假','山丘小鎮','葡萄酒鄉'],amalfi:['斷崖海岸','海灘度假','漁港小鎮','世界遺產'],normandy:['斷崖海岸','世界遺產','漁港小鎮'],kent:['斷崖海岸','城堡古堡','漁港小鎮'],
+ cinque:['漁港小鎮','斷崖海岸','世界遺產'],msm:['世界遺產','斷崖海岸','漁港小鎮'],algarve:['斷崖海岸','海灘度假','漁港小鎮'],cornwall:['斷崖海岸','漁港小鎮','海岸公路'],montenegro:['峽灣','斷崖海岸','古蹟遺址'],ireland:['斷崖海岸','高地荒野','城堡古堡'],
+ garda:['湖畔小鎮','古蹟遺址','葡萄酒鄉'],bled:['湖畔小鎮','高山健行','峽谷瀑布'],annecy:['湖畔小鎮','溫泉療養','高山健行'],como:['湖畔小鎮','山間湖泊'],balaton:['湖畔小鎮','溫泉療養','葡萄酒鄉'],constance:['湖畔小鎮','湖上城堡','世界遺產'],lakedistrict:['湖畔小鎮','高地荒野','高山健行'],
+ croatia:['跳島','古蹟遺址','世界遺產'],sicily:['火山地形','古蹟遺址','跳島'],sardinia:['海灘度假','古蹟遺址','跳島'],cyclades:['跳島','海灘度假','古蹟遺址'],mallorca:['海灘度假','斷崖海岸','山丘小鎮'],malta:['古蹟遺址','跳島','世界遺產'],corsica:['海灘度假','高山健行','斷崖海岸'],
+ lowlands:['運河風車','花田田園','世界遺產'],loire:['城堡古堡','葡萄酒鄉','世界遺產'],burgundy:['葡萄酒鄉','世界遺產','城堡古堡'],veneto:['古蹟遺址','美食之城','世界遺產'],baltic:['世界遺產','古蹟遺址','海灘度假'],porto:['葡萄酒鄉','世界遺產','海岸公路'],
+ alsace:['木桁架小鎮','葡萄酒鄉','聖誕市集'],romantic:['木桁架小鎮','城堡古堡','聖誕市集'],tuscany:['山丘小鎮','葡萄酒鄉','世界遺產'],puglia:['白色山村','海灘度假','世界遺產'],andalucia:['白色山村','古蹟遺址','葡萄酒鄉'],transylvania:['城堡古堡','山丘小鎮','世界遺產'],cotswolds:['山丘小鎮','城堡古堡'],dordogne:['山丘小鎮','城堡古堡','世界遺產'],umbria:['山丘小鎮','世界遺產','葡萄酒鄉'],peloponnese:['古蹟遺址','海灘度假','世界遺產'],rhine:['城堡古堡','葡萄酒鄉','世界遺產'],
+ bohemia:['世界級大城','城堡古堡','溫泉療養'],paris:['世界級大城','城堡古堡','日往返周邊','美食之城'],london:['世界級大城','日往返周邊','世界遺產'],rome:['世界級大城','古蹟遺址','日往返周邊'],barcelona:['世界級大城','海灘度假','日往返周邊'],berlin:['世界級大城','日往返周邊','世界遺產'],budapest:['世界級大城','溫泉療養','日往返周邊'],madrid:['世界級大城','古蹟遺址','日往返周邊'],lisbon:['世界級大城','海灘度假','城堡古堡'],copenhagen:['世界級大城','城堡古堡','日往返周邊'],stockholm:['世界級大城','跳島','日往返周邊'],munich:['世界級大城','城堡古堡','日往返周邊'],istanbul:['世界級大城','古蹟遺址','世界遺產'],
+ fjords:['峽灣','峽谷瀑布','冰河纜車'],scotland:['高地荒野','城堡古堡','湖畔小鎮']
+};
 REGIONS.forEach(function(r){
+  (EXTRA_BASES[r.id]||[]).forEach(function(b){if(!r.bases.some(function(x){return x[0]===b[0]}))r.bases.push(b)});
+  r.tags=TAGS[r.id]||[];
   if(r.t==='big')r.blurb+=' 這個區域平常多搭火車或地鐵,自駕車程只供參考。';
   r.B=r.bases.map(function(b){return {id:b[0],name:b[1],lat:b[2],lng:b[3],note:b[4]}});
   r.S=r.spots.map(function(s,i){return {i:i,name:s[0],lat:s[1],lng:s[2],note:s[3],tag:s[4]||''}});
@@ -457,7 +567,7 @@ function routeLink(b,s){return 'https://www.google.com/maps/dir/?api=1&origin='+
 
 /* ---------- state ---------- */
 var KEY='eu-trip-map-v1';
-var DEF={terrain:null,region:null,days:12,bases:[],active:null,maxMin:110,marks:{},step:1,trip:null,showTrack:true,hideSeen:false,onlyNew:false};
+var DEF={terrain:null,region:null,days:12,bases:[],active:null,maxMin:110,marks:{},step:1,tag:null,trip:null,showTrack:true,hideSeen:false,onlyNew:false};
 var state=JSON.parse(JSON.stringify(DEF));
 try{var sv=JSON.parse(localStorage.getItem(KEY)||'null');if(sv&&typeof sv==='object'){for(var k in DEF)if(k in sv)state[k]=sv[k]}}catch(e){}
 if(state.region&&!region(state.region)){state=JSON.parse(JSON.stringify(DEF))}
@@ -495,7 +605,7 @@ function flyTo(t){
 }
 function fitEurope(pts){flyTo(pts2view(pts||[[-10,36],[30,60]],1.1))}
 function fitMatching(){
-  var rs=REGIONS.filter(function(r){return !state.terrain||r.t===state.terrain});
+  var rs=REGIONS.filter(function(r){return (!state.terrain||r.t===state.terrain)&&(!state.tag||r.tags.indexOf(state.tag)>=0)});
   if(!rs.length)return fitEurope();
   fitEurope(rs.map(function(r){return [r.lng,r.lat]}).concat(rs.length===1?[[rs[0].lng-3,rs[0].lat-2],[rs[0].lng+3,rs[0].lat+2]]:[]));
 }
@@ -536,7 +646,7 @@ function draw(){
   }
   /* regions */
   REGIONS.forEach(function(g){
-    var p=P(g.lng,g.lat),match=!state.terrain||g.t===state.terrain,sel=r&&r.id===g.id;
+    var p=P(g.lng,g.lat),match=(!state.terrain||g.t===state.terrain)&&(!state.tag||g.tags.indexOf(state.tag)>=0),sel=r&&r.id===g.id;
     if(sel&&state.step>=3)return;
     if(r&&state.step>=3)match=false;
     var rad=(sel?10:(match?9:5))*u;
@@ -804,7 +914,7 @@ function renderSteps(){
 function s1(){
   return '<h2>想看什麼樣的地景?</h2><p class="sub">先選大地形,地圖上會亮出符合的區域。</p><div class="cards">'
    +TORDER.map(function(k){var n=REGIONS.filter(function(r){return r.t===k}).length;
-     return '<button class="card'+(state.terrain===k?' sel':'')+'" data-act="terrain" data-id="'+k+'"><span class="dot" style="background:'+T[k].c+'"></span><span><b>'+T[k].zh+'</b><small>'+T[k].ex+' · '+n+' 個區域</small></span></button>'}).join('')
+     return '<button class="card'+(state.terrain===k?' sel':'')+'" data-act="terrain" data-id="'+k+'"><span class="dot" style="background:'+T[k].c+'"></span><span><b>'+T[k].zh+'</b><small>'+T[k].ex+' · '+n+' 個區域</small><small class="tagrow">'+tagsOf(k).slice(0,5).map(function(x){return '<span class="tg">'+x[0]+'</span>'}).join('')+'</small></span></button>'}).join('')
    +'</div>'+tripsHtml()+(CLOUD.fired&&CLOUD.ready?cloudHtml(false):'')+'<div class="nav"><span></span><button class="btn" data-act="step" data-n="2">看區域</button></div>';
 }
 function tripsHtml(){
@@ -814,11 +924,13 @@ function tripsHtml(){
      return '<button class="card'+(state.trip===t.i?' sel':'')+'" data-act="trip" data-id="'+t.i+'"><span class="dot" style="background:var(--track)"></span><span><b class="mono">'+t.s+' → '+(same?t.e.slice(8):t.e.slice(5))+'</b><small>'+t.label+' · '+days+' 天 · '+t.n+' 個停留點</small></span></button>'}).join('')
    +'</div>';
 }
+function tagsOf(terrain){var m={};REGIONS.forEach(function(r){if(!terrain||r.t===terrain)r.tags.forEach(function(t){m[t]=(m[t]||0)+1})});return Object.keys(m).sort(function(a,b){return m[b]-m[a]}).map(function(t){return [t,m[t]]})}
 function s2(){
-  var rs=REGIONS.filter(function(r){return (!state.terrain||r.t===state.terrain)&&!(HIST&&state.onlyNew&&Object.keys(r.trips).length)});
+  var rs=REGIONS.filter(function(r){return (!state.terrain||r.t===state.terrain)&&(!state.tag||r.tags.indexOf(state.tag)>=0)&&!(HIST&&state.onlyNew&&Object.keys(r.trips).length)});
   return '<h2>'+(state.terrain?T[state.terrain].zh+'的':'')+'候選區域</h2><p class="sub">選一個區域,以 '+'10–14 天、換 2 次住宿點為基準規劃。'+(state.terrain?' <a href="#" data-act="clearterrain">看全部</a>':'')+'</p>'
+   +'<div class="tabs" style="margin-top:0"><button data-act="tag" data-id=""'+(state.tag?'':' class="on"')+'>全部細項</button>'+tagsOf(state.terrain).map(function(x){return '<button data-act="tag" data-id="'+x[0]+'"'+(state.tag===x[0]?' class="on"':'')+'>'+x[0]+' <span class="mono" style="opacity:.6">'+x[1]+'</span></button>'}).join('')+'</div>'
    +(HIST?'<div class="row" style="margin-bottom:8px"><input type="checkbox" id="onlynew" data-act="onlynew"'+(state.onlyNew?' checked':'')+'><label for="onlynew">只看沒去過的區域</label></div>':'')+'<div class="cards">'
-   +rs.map(function(r){return '<button class="card'+(state.region===r.id?' sel':'')+'" data-act="region" data-id="'+r.id+'"><span class="dot" style="background:'+T[r.t].c+'"></span><span><b>'+r.name+'<span class="pill" style="color:'+T[r.t].c+'">'+T[r.t].zh+'</span></b><small>'+r.blurb+'</small><small class="mono">建議 '+r.days+' 天 · '+r.B.length+' 個據點 · '+r.S.length+' 個景點</small>'+(HIST?(Object.keys(r.trips).length?'<small style="color:var(--track)">去過 '+Object.keys(r.trips).length+' 次('+seenYears(r)+'),已到訪 '+r.S.filter(function(s){return s.seenAny}).length+'/'+r.S.length+' 個景點</small>':'<small>還沒去過</small>'):'')+'</span></button>'}).join('')
+   +rs.map(function(r){return '<button class="card'+(state.region===r.id?' sel':'')+'" data-act="region" data-id="'+r.id+'"><span class="dot" style="background:'+T[r.t].c+'"></span><span><b>'+r.name+'<span class="pill" style="color:'+T[r.t].c+'">'+T[r.t].zh+'</span></b><small>'+r.blurb+'</small><small class="tagrow">'+r.tags.map(function(t){return '<span class="tg'+(state.tag===t?' on':'')+'">'+t+'</span>'}).join('')+'</small><small class="mono">建議 '+r.days+' 天 · '+r.B.length+' 個據點 · '+r.S.length+' 個景點</small>'+(HIST?(Object.keys(r.trips).length?'<small style="color:var(--track)">去過 '+Object.keys(r.trips).length+' 次('+seenYears(r)+'),已到訪 '+r.S.filter(function(s){return s.seenAny}).length+'/'+r.S.length+' 個景點</small>':'<small>還沒去過</small>'):'')+'</span></button>'}).join('')
    +'</div><div class="nav"><button class="btn alt" data-act="step" data-n="1">上一步</button><button class="btn" data-act="step" data-n="3"'+(state.region?'':' disabled')+'>選住宿點</button></div>';
 }
 function s3(){
@@ -880,11 +992,12 @@ function render(){
 }
 body.addEventListener('click',function(e){
   var t=e.target.closest('[data-act]');if(!t)return;var a=t.getAttribute('data-act'),id=t.getAttribute('data-id');
-  if(a==='terrain'){state.terrain=id;state.step=2;save();render();fitMatching();draw()}
-  else if(a==='clearterrain'){e.preventDefault();state.terrain=null;save();render();fitMatching()}
+  if(a==='terrain'){state.terrain=id;state.tag=null;state.step=2;save();render();fitMatching();draw()}
+  else if(a==='clearterrain'){e.preventDefault();state.terrain=null;state.tag=null;save();render();fitMatching()}
   else if(a==='region'){pickRegion(id)}
   else if(a==='base'){toggleBase(id)}
   else if(a==='copyplan'){copyOut(id,t)}
+  else if(a==='tag'){state.tag=id||null;save();render()}
   else if(a==='sheet'){openSheet()}
   else if(a==='cloudsave'){
     var inp=document.getElementById('planname'),cr=R(),cp=buildPlan();
